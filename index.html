@@ -1,328 +1,334 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f7f8fa" />
-    <title>Work Log</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="app-shell">
-      <header class="app-header">
-        <div>
-          <p class="eyebrow">WORK LOG</p>
-          <h1>Gradilišta</h1>
-        </div>
-        <div class="header-icon" aria-hidden="true">W</div>
-      </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#f7f8fa" />
+		<title>Work Log</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="app-shell">
+			<header class="app-header">
+				<div>
+					<p class="eyebrow">WORK LOG</p>
+					<h1>Gradilišta</h1>
+				</div>
+				<div class="header-icon" aria-hidden="true">W</div>
+			</header>
 
-      <main class="app-content">
-        <!-- Home: svi aktivni projekti/gradilišta. -->
-        <section id="homeView" class="view active" aria-labelledby="homeTitle">
-          <div class="page-heading">
-            <div>
-              <p class="section-label">PROJEKTI</p>
-              <h2 id="homeTitle">Gradilišta</h2>
-              <p class="muted">Izaberi folder ili kreiraj novo gradilište.</p>
-            </div>
-          </div>
+			<main class="app-content">
+				<!-- Home: svi aktivni projekti/gradilišta. -->
+				<section id="homeView" class="view active" aria-labelledby="homeTitle">
+					<div class="page-heading">
+						<div>
+							<p class="section-label">PROJEKTI</p>
+							<h2 id="homeTitle">Gradilišta</h2>
+							<p class="muted">Izaberi folder ili kreiraj novo gradilište.</p>
+						</div>
+					</div>
 
-          <div id="projectsLoading" class="state-card card hidden">
-            Učitavanje gradilišta...
-          </div>
-          <div id="projectsEmpty" class="state-card card hidden">
-            <div class="empty-icon" aria-hidden="true">▱</div>
-            <p>Još nema gradilišta.</p>
-          </div>
-          <div id="projectsGrid" class="projects-grid"></div>
+					<div id="projectsLoading" class="state-card card hidden">
+						Učitavanje gradilišta...
+					</div>
+					<div id="projectsEmpty" class="state-card card hidden">
+						<div class="empty-icon" aria-hidden="true">▱</div>
+						<p>Još nema gradilišta.</p>
+					</div>
+					<div id="projectsGrid" class="projects-grid"></div>
 
-          <button
-            id="addProjectButton"
-            class="floating-add-button"
-            type="button"
-            aria-label="Kreiraj novo gradilište"
-          >
-            <span aria-hidden="true">+</span>
-          </button>
-        </section>
+					<button
+						id="addProjectButton"
+						class="floating-add-button"
+						type="button"
+						aria-label="Kreiraj novo gradilište"
+					>
+						<span aria-hidden="true">+</span>
+					</button>
+				</section>
 
-        <!-- Detalj jednog gradilišta. -->
-        <section
-          id="projectView"
-          class="view"
-          aria-labelledby="projectDetailTitle"
-        >
-          <button id="backToProjectsButton" class="back-button" type="button">
-            <span aria-hidden="true">←</span> Gradilišta
-          </button>
+				<!-- Detalj jednog gradilišta. -->
+				<section
+					id="projectView"
+					class="view"
+					aria-labelledby="projectDetailTitle"
+				>
+					<button id="backToProjectsButton" class="back-button" type="button">
+						<span aria-hidden="true">←</span> Gradilišta
+					</button>
 
-          <div class="detail-heading">
-            <div>
-              <p class="section-label">GRADILIŠTE</p>
-              <h2 id="projectDetailTitle">—</h2>
-            </div>
-            <button
-              id="deleteCurrentProjectButton"
-              class="danger-text-button"
-              type="button"
-            >
-              Delete
-            </button>
-          </div>
+					<div class="detail-heading">
+						<div>
+							<p class="section-label">GRADILIŠTE</p>
+							<h2 id="projectDetailTitle">—</h2>
+						</div>
+						<button
+							id="deleteCurrentProjectButton"
+							class="danger-text-button"
+							type="button"
+						>
+							Delete
+						</button>
+					</div>
 
-          <div class="stats-grid">
-            <article class="stat-card card">
-              <span class="stat-icon hours-icon" aria-hidden="true">↗</span>
-              <p>Ukupno sati</p>
-              <strong id="projectTotalHours">0</strong>
-            </article>
-            <article class="stat-card card">
-              <span class="stat-icon days-icon" aria-hidden="true">✓</span>
-              <p>Radnih dana</p>
-              <strong id="projectWorkingDays">0</strong>
-            </article>
-          </div>
+					<div class="stats-grid">
+						<article class="stat-card card">
+							<span class="stat-icon hours-icon" aria-hidden="true">↗</span>
+							<p>Ukupno sati</p>
+							<strong id="projectTotalHours">0</strong>
+						</article>
+						<article class="stat-card card">
+							<span class="stat-icon days-icon" aria-hidden="true">✓</span>
+							<p>Radnih dana</p>
+							<strong id="projectWorkingDays">0</strong>
+						</article>
+					</div>
 
-          <div class="section-heading">
-            <div class="heading-with-count">
-              <h3>Radni unosi</h3>
-              <span id="projectEntryCount" class="count-badge">0</span>
-            </div>
-            <button id="addEntryButton" class="compact-add-button" type="button">
-              <span aria-hidden="true">+</span> Dodaj rad
-            </button>
-          </div>
+					<div class="section-heading">
+						<div class="heading-with-count">
+							<h3>Radni unosi</h3>
+							<span id="projectEntryCount" class="count-badge">0</span>
+						</div>
+						<button
+							id="addEntryButton"
+							class="compact-add-button"
+							type="button"
+						>
+							<span aria-hidden="true">+</span> Dodaj rad
+						</button>
+					</div>
 
-          <div id="entriesLoading" class="state-card card hidden">
-            Učitavanje unosa...
-          </div>
-          <div id="entriesEmpty" class="state-card card hidden">
-            <p>Nema radnih unosa za ovo gradilište.</p>
-          </div>
-          <div id="projectEntriesList" class="entries-list"></div>
-        </section>
+					<div id="entriesLoading" class="state-card card hidden">
+						Učitavanje unosa...
+					</div>
+					<div id="entriesEmpty" class="state-card card hidden">
+						<p>Nema radnih unosa za ovo gradilište.</p>
+					</div>
+					<div id="projectEntriesList" class="entries-list"></div>
+				</section>
 
-        <!-- Mesečni zbir po gradilištima. -->
-        <section id="reportsView" class="view" aria-labelledby="reportsTitle">
-          <div id="reportsOverview">
-            <div class="reports-heading">
-              <div>
-                <p class="section-label">PREGLED</p>
-                <h2 id="reportsTitle">Reports</h2>
-              </div>
-              <label class="month-field">
-                <span>Mesec</span>
-                <input id="reportMonth" type="month" />
-              </label>
-            </div>
+				<!-- Mesečni zbir po gradilištima. -->
+				<section id="reportsView" class="view" aria-labelledby="reportsTitle">
+					<div id="reportsOverview">
+						<div class="reports-heading">
+							<div>
+								<p class="section-label">PREGLED</p>
+								<h2 id="reportsTitle">Reports</h2>
+							</div>
+							<label class="month-field">
+								<span>Mesec</span>
+								<input id="reportMonth" type="month" />
+							</label>
+						</div>
 
-            <div id="reportLoading" class="state-card card hidden">
-              Učitavanje reporta...
-            </div>
-            <div id="reportEmpty" class="state-card card hidden">
-              <p>Nema gradilišta za prikaz.</p>
-            </div>
-            <div id="reportProjectsList" class="report-list"></div>
-          </div>
+						<div id="reportLoading" class="state-card card hidden">
+							Učitavanje reporta...
+						</div>
+						<div id="reportEmpty" class="state-card card hidden">
+							<p>Nema gradilišta za prikaz.</p>
+						</div>
+						<div id="reportProjectsList" class="report-list"></div>
+					</div>
 
-          <!-- Drill-down jednog gradilišta iz Reports prikaza. -->
-          <div id="reportProjectDetail" class="hidden">
-            <button id="backToReportButton" class="back-button" type="button">
-              <span aria-hidden="true">←</span> Reports
-            </button>
+					<!-- Drill-down jednog gradilišta iz Reports prikaza. -->
+					<div id="reportProjectDetail" class="hidden">
+						<button id="backToReportButton" class="back-button" type="button">
+							<span aria-hidden="true">←</span> Reports
+						</button>
 
-            <div class="detail-heading">
-              <div>
-                <p id="reportDetailMonthLabel" class="section-label">MESEC</p>
-                <h2 id="reportProjectTitle">—</h2>
-              </div>
-            </div>
+						<div class="detail-heading">
+							<div>
+								<p id="reportDetailMonthLabel" class="section-label">MESEC</p>
+								<h2 id="reportProjectTitle">—</h2>
+							</div>
+						</div>
 
-            <article class="report-total-card card">
-              <p>Ukupno sati za izabrani mesec</p>
-              <strong id="reportProjectTotalHours">0 h</strong>
-            </article>
+						<article class="report-total-card card">
+							<p>Ukupno sati za izabrani mesec</p>
+							<strong id="reportProjectTotalHours">0 h</strong>
+						</article>
 
-            <button
-              id="exportProjectReportButton"
-              class="export-button export-project-button"
-              type="button"
-            >
-              Export ovog gradilišta u Google Sheets
-            </button>
+						<button
+							id="exportProjectReportButton"
+							class="export-button export-project-button"
+							type="button"
+						>
+							Export ovog gradilišta u Google Sheets
+						</button>
 
-            <div id="reportEntriesEmpty" class="state-card card hidden">
-              <p>Nema unosa za ovo gradilište u izabranom mesecu.</p>
-            </div>
-            <div id="reportEntriesList" class="entries-list"></div>
-          </div>
-        </section>
-      </main>
+						<div id="reportEntriesEmpty" class="state-card card hidden">
+							<p>Nema unosa za ovo gradilište u izabranom mesecu.</p>
+						</div>
+						<div id="reportEntriesList" class="entries-list"></div>
+					</div>
+				</section>
+			</main>
 
-      <nav class="bottom-nav" aria-label="Glavna navigacija">
-        <button class="nav-item active" type="button" data-view="homeView">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M3 11.5 12 4l9 7.5v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />
-          </svg>
-          <span>Home</span>
-        </button>
-        <button class="nav-item" type="button" data-view="reportsView">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 20V10m7 10V4m7 16v-7" />
-          </svg>
-          <span>Reports</span>
-        </button>
-      </nav>
-    </div>
+			<nav class="bottom-nav" aria-label="Glavna navigacija">
+				<button class="nav-item active" type="button" data-view="homeView">
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<path
+							d="M3 11.5 12 4l9 7.5v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"
+						/>
+					</svg>
+					<span>Home</span>
+				</button>
+				<button class="nav-item" type="button" data-view="reportsView">
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<path d="M5 20V10m7 10V4m7 16v-7" />
+					</svg>
+					<span>Reports</span>
+				</button>
+			</nav>
+		</div>
 
-    <!-- PIN prijava. PIN se proverava u Google Apps Script-u. -->
-    <div id="authModal" class="modal auth-modal open" aria-hidden="false">
-      <div class="modal-backdrop"></div>
-      <section
-        class="modal-panel auth-panel"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="authModalTitle"
-      >
-        <div class="modal-header">
-          <div>
-            <p class="section-label">ZAŠTIĆEN PRISTUP</p>
-            <h2 id="authModalTitle">Prijava</h2>
-          </div>
-        </div>
+		<!-- PIN prijava. PIN se proverava u Google Apps Script-u. -->
+		<div id="authModal" class="modal auth-modal open" aria-hidden="false">
+			<div class="modal-backdrop"></div>
+			<section
+				class="modal-panel auth-panel"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="authModalTitle"
+			>
+				<div class="modal-header">
+					<div>
+						<p class="section-label">ZAŠTIĆEN PRISTUP</p>
+						<h2 id="authModalTitle">Prijava</h2>
+					</div>
+				</div>
 
-        <form id="authForm">
-          <label class="form-field">
-            <span>PIN</span>
-            <input
-              id="pinInput"
-              name="pin"
-              type="password"
-              inputmode="numeric"
-              autocomplete="current-password"
-              placeholder="Unesi PIN"
-              required
-            />
-          </label>
-          <p id="authFormError" class="form-error" role="alert"></p>
-          <button id="loginButton" class="save-button" type="submit">
-            Prijavi se
-          </button>
-        </form>
-      </section>
-    </div>
+				<form id="authForm">
+					<label class="form-field">
+						<span>PIN</span>
+						<input
+							id="pinInput"
+							name="pin"
+							type="password"
+							inputmode="numeric"
+							autocomplete="current-password"
+							placeholder="Unesi PIN"
+							required
+						/>
+					</label>
+					<p id="authFormError" class="form-error" role="alert"></p>
+					<button id="loginButton" class="save-button" type="submit">
+						Prijavi se
+					</button>
+				</form>
+			</section>
+		</div>
 
-    <!-- Modal za novo gradilište. -->
-    <div id="projectModal" class="modal" aria-hidden="true">
-      <div class="modal-backdrop" data-close-project-modal></div>
-      <section
-        class="modal-panel"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="projectModalTitle"
-      >
-        <div class="modal-handle" aria-hidden="true"></div>
-        <div class="modal-header">
-          <div>
-            <p class="section-label">NOVI FOLDER</p>
-            <h2 id="projectModalTitle">Novo gradilište</h2>
-          </div>
-          <button
-            class="close-button"
-            type="button"
-            data-close-project-modal
-            aria-label="Zatvori"
-          >
-            ×
-          </button>
-        </div>
+		<!-- Modal za novo gradilište. -->
+		<div id="projectModal" class="modal" aria-hidden="true">
+			<div class="modal-backdrop" data-close-project-modal></div>
+			<section
+				class="modal-panel"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="projectModalTitle"
+			>
+				<div class="modal-handle" aria-hidden="true"></div>
+				<div class="modal-header">
+					<div>
+						<p class="section-label">NOVI FOLDER</p>
+						<h2 id="projectModalTitle">Novo gradilište</h2>
+					</div>
+					<button
+						class="close-button"
+						type="button"
+						data-close-project-modal
+						aria-label="Zatvori"
+					>
+						×
+					</button>
+				</div>
 
-        <form id="projectForm">
-          <label class="form-field">
-            <span>Naziv gradilišta</span>
-            <input
-              id="projectName"
-              name="projectName"
-              type="text"
-              maxlength="120"
-              placeholder="Na primer: Zgrada 1"
-              required
-            />
-          </label>
-          <p id="projectFormError" class="form-error" role="alert"></p>
-          <button id="saveProjectButton" class="save-button" type="submit">
-            Save
-          </button>
-        </form>
-      </section>
-    </div>
+				<form id="projectForm">
+					<label class="form-field">
+						<span>Naziv gradilišta</span>
+						<input
+							id="projectName"
+							name="projectName"
+							type="text"
+							maxlength="120"
+							placeholder="Na primer: Zgrada 1"
+							required
+						/>
+					</label>
+					<p id="projectFormError" class="form-error" role="alert"></p>
+					<button id="saveProjectButton" class="save-button" type="submit">
+						Save
+					</button>
+				</form>
+			</section>
+		</div>
 
-    <!-- Modal za radni unos unutar izabranog gradilišta. -->
-    <div id="entryModal" class="modal" aria-hidden="true">
-      <div class="modal-backdrop" data-close-entry-modal></div>
-      <section
-        class="modal-panel"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="entryModalTitle"
-      >
-        <div class="modal-handle" aria-hidden="true"></div>
-        <div class="modal-header">
-          <div>
-            <p id="entryProjectName" class="section-label">GRADILIŠTE</p>
-            <h2 id="entryModalTitle">Dodaj rad</h2>
-          </div>
-          <button
-            class="close-button"
-            type="button"
-            data-close-entry-modal
-            aria-label="Zatvori"
-          >
-            ×
-          </button>
-        </div>
+		<!-- Modal za radni unos unutar izabranog gradilišta. -->
+		<div id="entryModal" class="modal" aria-hidden="true">
+			<div class="modal-backdrop" data-close-entry-modal></div>
+			<section
+				class="modal-panel"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="entryModalTitle"
+			>
+				<div class="modal-handle" aria-hidden="true"></div>
+				<div class="modal-header">
+					<div>
+						<p id="entryProjectName" class="section-label">GRADILIŠTE</p>
+						<h2 id="entryModalTitle">Dodaj rad</h2>
+					</div>
+					<button
+						class="close-button"
+						type="button"
+						data-close-entry-modal
+						aria-label="Zatvori"
+					>
+						×
+					</button>
+				</div>
 
-        <form id="entryForm">
-          <label class="form-field">
-            <span>Datum</span>
-            <input id="entryDate" name="date" type="date" required />
-          </label>
-          <label class="form-field">
-            <span>Šta sam radio</span>
-            <textarea
-              name="description"
-              rows="4"
-              maxlength="500"
-              placeholder="Kratak opis obavljenog posla"
-              required
-            ></textarea>
-          </label>
-          <label class="form-field">
-            <span>Sati</span>
-            <div class="hours-input">
-              <input
-                name="hours"
-                type="number"
-                min="0.25"
-                max="24"
-                step="0.25"
-                inputmode="decimal"
-                placeholder="8"
-                required
-              />
-              <span>h</span>
-            </div>
-          </label>
-          <p id="entryFormError" class="form-error" role="alert"></p>
-          <button id="saveEntryButton" class="save-button" type="submit">
-            Save entry
-          </button>
-        </form>
-      </section>
-    </div>
+				<form id="entryForm">
+					<label class="form-field">
+						<span>Datum</span>
+						<input id="entryDate" name="date" type="date" required />
+					</label>
+					<label class="form-field">
+						<span>Šta sam radio</span>
+						<textarea
+							name="description"
+							rows="4"
+							maxlength="500"
+							placeholder="Kratak opis obavljenog posla"
+							required
+						></textarea>
+					</label>
+					<label class="form-field">
+						<span>Sati</span>
+						<div class="hours-input">
+							<input
+								name="hours"
+								type="number"
+								min="0.25"
+								max="24"
+								step="0.25"
+								inputmode="decimal"
+								placeholder="8"
+								required
+							/>
+							<span>h</span>
+						</div>
+					</label>
+					<p id="entryFormError" class="form-error" role="alert"></p>
+					<button id="saveEntryButton" class="save-button" type="submit">
+						Save entry
+					</button>
+				</form>
+			</section>
+		</div>
 
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script src="script.js"></script>
-  </body>
+		<div id="toast" class="toast" role="status" aria-live="polite"></div>
+		<script src="script.js"></script>
+	</body>
 </html>
